@@ -59,7 +59,7 @@ public class SecurityConfig {
                 "http://localhost:5174",
                 "http://localhost:5173",
                 "http://localhost:3000",
-                "https://test-niufazj6b-malindu0812s-projects.vercel.app" // <-- your deployed frontend
+                "https://test-j81n1vwas-malindu0812s-projects.vercel.app" // your deployed frontend
         ));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
@@ -108,6 +108,7 @@ public class SecurityConfig {
                         // All other endpoints require authentication
                         .anyRequest().authenticated()
                 )
+                // Make sure JWT filter does not block OPTIONS requests
                 .addFilterBefore(jwtAuthFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
