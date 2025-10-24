@@ -314,3 +314,43 @@
 2025-10-24T17:13:32.441+05:30 DEBUG 28304 --- [Home4Paws] [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, JwtAuthFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, SessionManagementFilter, ExceptionTranslationFilter, AuthorizationFilter
 2025-10-24T17:13:32.775+05:30  INFO 28304 --- [Home4Paws] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8084 (http) with context path '/'
 2025-10-24T17:13:32.787+05:30  INFO 28304 --- [Home4Paws] [main] c.ooad.home4paws.Home4PawsApplication    : Started Home4PawsApplication in 6.288 seconds (process running for 6.612)
+2025-10-24T17:20:16.479+05:30  INFO 28304 --- [Home4Paws] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-10-24T17:20:16.482+05:30  INFO 28304 --- [Home4Paws] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-10-24T17:20:16.489+05:30  INFO 28304 --- [Home4Paws] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-24T17:20:16.492+05:30  INFO 28304 --- [Home4Paws] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-10-24T17:20:16.500+05:30  INFO 28304 --- [Home4Paws] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-10-24T17:20:18.132+05:30  INFO 30982 --- [Home4Paws] [main] c.ooad.home4paws.Home4PawsApplication    : Starting Home4PawsApplication using Java 24.0.1 with PID 30982 (/home/malindu/Desktop/Home4Paws-malindu/backend/Home4Paws/target/classes started by malindu in /home/malindu/Desktop/Home4Paws-malindu/backend/Home4Paws)
+2025-10-24T17:20:18.141+05:30 DEBUG 30982 --- [Home4Paws] [main] c.ooad.home4paws.Home4PawsApplication    : Running with Spring Boot v3.5.4, Spring v6.2.9
+2025-10-24T17:20:18.142+05:30  INFO 30982 --- [Home4Paws] [main] c.ooad.home4paws.Home4PawsApplication    : The following 1 profile is active: "dev"
+2025-10-24T17:20:19.159+05:30  INFO 30982 --- [Home4Paws] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-24T17:20:19.213+05:30  INFO 30982 --- [Home4Paws] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 46 ms. Found 7 JPA repository interfaces.
+2025-10-24T17:20:19.759+05:30  INFO 30982 --- [Home4Paws] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8084 (http)
+2025-10-24T17:20:19.778+05:30  INFO 30982 --- [Home4Paws] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-10-24T17:20:19.779+05:30  INFO 30982 --- [Home4Paws] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.43]
+2025-10-24T17:20:19.838+05:30  INFO 30982 --- [Home4Paws] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-10-24T17:20:19.839+05:30  INFO 30982 --- [Home4Paws] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1648 ms
+2025-10-24T17:20:20.136+05:30  INFO 30982 --- [Home4Paws] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-24T17:20:20.172+05:30  INFO 30982 --- [Home4Paws] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.22.Final
+2025-10-24T17:20:20.195+05:30  INFO 30982 --- [Home4Paws] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-24T17:20:20.409+05:30  INFO 30982 --- [Home4Paws] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-24T17:20:20.433+05:30  INFO 30982 --- [Home4Paws] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-10-24T17:20:23.341+05:30  INFO 30982 --- [Home4Paws] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@70e1aa20
+2025-10-24T17:20:23.343+05:30  INFO 30982 --- [Home4Paws] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-10-24T17:20:23.830+05:30  INFO 30982 --- [Home4Paws] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 9.4
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-24T17:20:24.555+05:30  INFO 30982 --- [Home4Paws] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-24T17:20:28.768+05:30  INFO 30982 --- [Home4Paws] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-24T17:20:29.014+05:30 DEBUG 30982 --- [Home4Paws] [main] c.ooad.home4paws.security.JwtAuthFilter  : Filter 'jwtAuthFilter' configured for use
+2025-10-24T17:20:29.096+05:30  INFO 30982 --- [Home4Paws] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-10-24T17:20:30.043+05:30  WARN 30982 --- [Home4Paws] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-24T17:20:30.084+05:30  INFO 30982 --- [Home4Paws] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2025-10-24T17:20:30.464+05:30  INFO 30982 --- [Home4Paws] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 3 endpoints beneath base path '/actuator'
+2025-10-24T17:20:30.538+05:30 DEBUG 30982 --- [Home4Paws] [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, JwtAuthFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, SessionManagementFilter, ExceptionTranslationFilter, AuthorizationFilter
+2025-10-24T17:20:30.825+05:30  INFO 30982 --- [Home4Paws] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8084 (http) with context path '/'
+2025-10-24T17:20:30.837+05:30  INFO 30982 --- [Home4Paws] [main] c.ooad.home4paws.Home4PawsApplication    : Started Home4PawsApplication in 13.167 seconds (process running for 13.517)
