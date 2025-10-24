@@ -354,3 +354,8 @@
 2025-10-24T17:20:30.538+05:30 DEBUG 30982 --- [Home4Paws] [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, JwtAuthFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, SessionManagementFilter, ExceptionTranslationFilter, AuthorizationFilter
 2025-10-24T17:20:30.825+05:30  INFO 30982 --- [Home4Paws] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8084 (http) with context path '/'
 2025-10-24T17:20:30.837+05:30  INFO 30982 --- [Home4Paws] [main] c.ooad.home4paws.Home4PawsApplication    : Started Home4PawsApplication in 13.167 seconds (process running for 13.517)
+2025-10-24T19:11:05.490+05:30  INFO 30982 --- [Home4Paws] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-10-24T19:11:05.497+05:30  INFO 30982 --- [Home4Paws] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-10-24T19:11:05.512+05:30  INFO 30982 --- [Home4Paws] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-24T19:11:05.518+05:30  INFO 30982 --- [Home4Paws] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-10-24T19:11:05.657+05:30  INFO 30982 --- [Home4Paws] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

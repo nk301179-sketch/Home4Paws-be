@@ -41,9 +41,9 @@ public class AuthController {
 
     @Operation(summary = "Register a new user", description = "Create a new user account")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", description = "User successfully registered"),
-        @ApiResponse(responseCode = "400", description = "Invalid input data"),
-        @ApiResponse(responseCode = "409", description = "Username or email already exists")
+            @ApiResponse(responseCode = "201", description = "User successfully registered"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "409", description = "Username or email already exists")
     })
     @PostMapping("/register")
     public ResponseEntity<String> register(@Valid @RequestBody RegisterRequest req) {
@@ -54,9 +54,9 @@ public class AuthController {
 
     @Operation(summary = "Authenticate user", description = "Login with username and password to receive JWT token")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Successfully authenticated"),
-        @ApiResponse(responseCode = "400", description = "Invalid input data"),
-        @ApiResponse(responseCode = "401", description = "Invalid credentials")
+            @ApiResponse(responseCode = "200", description = "Successfully authenticated"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "401", description = "Invalid credentials")
     })
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> login(@Valid @RequestBody LoginRequest req) {
@@ -66,9 +66,9 @@ public class AuthController {
 
         var principal = (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
         List<String> roles = principal.getAuthorities()
-                                      .stream()
-                                      .map(a -> a.getAuthority())
-                                      .collect(Collectors.toList());
+                .stream()
+                .map(a -> a.getAuthority())
+                .collect(Collectors.toList());
 
         String jwt = jwtUtils.generateToken(principal.getUsername(), roles);
 
