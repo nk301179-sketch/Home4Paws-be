@@ -5,6 +5,7 @@ import com.ooad.home4paws.security.JwtAuthFilter;
 import com.ooad.home4paws.security.JwtUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -34,25 +35,16 @@ public class SecurityConfig {
         this.jwtUtils = jwtUtils;
     }
 
-    /**
-     * Password encoder bean for hashing passwords.
-     */
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    /**
-     * JWT authentication filter bean.
-     */
     @Bean
     public JwtAuthFilter jwtAuthFilter() {
         return new JwtAuthFilter(jwtUtils, userDetailsService);
     }
 
-    /**
-     * AuthenticationManager bean for handling authentication.
-     */
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
         AuthenticationManagerBuilder builder = http.getSharedObject(AuthenticationManagerBuilder.class);
@@ -60,9 +52,6 @@ public class SecurityConfig {
         return builder.build();
     }
 
-    /**
-     * CORS configuration - allows all origins, methods, and headers.
-     */
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
@@ -70,9 +59,7 @@ public class SecurityConfig {
                 "http://localhost:5174",
                 "http://localhost:5173",
                 "http://localhost:3000",
-                "http://localhost:5173",
-                "http://localhost:8080",
-                "https://test-liart-two-87.vercel.app"
+                "https://test-niufazj6b-malindu0812s-projects.vercel.app" // <-- your deployed frontend
         ));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
@@ -83,60 +70,45 @@ public class SecurityConfig {
         return source;
     }
 
-    /**
-     * Main security filter chain.
-     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            // Enable CORS and disable CSRF
-            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            .csrf(AbstractHttpConfigurer::disable)
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+                        // Allow preflight requests
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
-            // Stateless session management
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                        // Public endpoints
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/admin/login").permitAll()
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/actuator/**").permitAll()
+                        .requestMatchers("/api/surrender-dogs").permitAll()
+                        .requestMatchers("/api/surrender-dogs/{id}").permitAll()
+                        .requestMatchers("/api/dogs").permitAll()
+                        .requestMatchers("/api/dogs/{id}").permitAll()
+                        .requestMatchers("/api/dogs/adopt").permitAll()
+                        .requestMatchers("/api/dogs/buy").permitAll()
+                        .requestMatchers("/api/dogs/status/{status}").permitAll()
+                        .requestMatchers("/api/reports").permitAll()
+                        .requestMatchers("/api/contact-messages").permitAll()
 
-            // Configure authorization rules
-            .authorizeHttpRequests(auth -> auth
-                // Public endpoints - no authentication required
-                .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/admin/login").permitAll()  // Admin login endpoint
-                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                .requestMatchers("/actuator/**").permitAll()
-                
-                // Public read-only access for guests
-                .requestMatchers("/api/surrender-dogs").permitAll()  // View all dogs (adopt page)
-                .requestMatchers("/api/surrender-dogs/{id}").permitAll()  // View single dog
-                .requestMatchers("/api/dogs").permitAll()  // View all dogs
-                .requestMatchers("/api/dogs/{id}").permitAll()  // View single dog
-                .requestMatchers("/api/dogs/adopt").permitAll()  // View dogs for adoption
-                .requestMatchers("/api/dogs/buy").permitAll()  // View dogs for sale
-                .requestMatchers("/api/dogs/status/{status}").permitAll()  // View dogs by status
-                .requestMatchers("/api/reports").permitAll()  // Returns empty for guests
-                
-                // Contact message submission - allow public access
-                .requestMatchers("/api/contact-messages").permitAll()
-                
-                // Application endpoints - require authentication
-                .requestMatchers("/api/applications/**").authenticated()
-                
-                // Contact message management - require authentication
-                .requestMatchers("/api/contact-messages/my-messages").authenticated()
-                .requestMatchers("/api/contact-messages/{id}").authenticated()
-                
-                // Admin-only endpoints
-                .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                
-                // Protected endpoints - require authentication
-                .requestMatchers("/api/reports/my-reports").authenticated()  // User's own reports
-                .requestMatchers("/api/surrender-dogs/my-requests").authenticated()  // User's own surrender requests
-                
-                // All other endpoints require authentication (POST, PUT, DELETE)
-                .anyRequest().authenticated()
-            )
+                        // Authenticated endpoints
+                        .requestMatchers("/api/applications/**").authenticated()
+                        .requestMatchers("/api/contact-messages/my-messages").authenticated()
+                        .requestMatchers("/api/contact-messages/{id}").authenticated()
+                        .requestMatchers("/api/reports/my-reports").authenticated()
+                        .requestMatchers("/api/surrender-dogs/my-requests").authenticated()
 
-            // Add JWT authentication filter
-            .addFilterBefore(jwtAuthFilter(), UsernamePasswordAuthenticationFilter.class);
+                        // Admin-only endpoints
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+
+                        // All other endpoints require authentication
+                        .anyRequest().authenticated()
+                )
+                .addFilterBefore(jwtAuthFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
