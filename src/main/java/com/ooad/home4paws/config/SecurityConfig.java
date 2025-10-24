@@ -55,11 +55,13 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of(
+        // Allow multiple frontends including localhost & deployed Vercel URLs
+        config.setAllowedOriginPatterns(List.of(
                 "http://localhost:5174",
                 "http://localhost:5173",
                 "http://localhost:3000",
-                "https://test-j81n1vwas-malindu0812s-projects.vercel.app" // your deployed frontend
+                "https://test-j81n1vwas-malindu0812s-projects.vercel.app",
+                "https://*.vercel.app" // allows any vercel subdomain
         ));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
@@ -73,27 +75,27 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                // Enable CORS and disable CSRF
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+
+                // Authorization rules
                 .authorizeHttpRequests(auth -> auth
-                        // Allow preflight requests
+                        // Allow all preflight OPTIONS requests
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
                         // Public endpoints
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/admin/login").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers("/actuator/**").permitAll()
-                        .requestMatchers("/api/surrender-dogs").permitAll()
-                        .requestMatchers("/api/surrender-dogs/{id}").permitAll()
-                        .requestMatchers("/api/dogs").permitAll()
-                        .requestMatchers("/api/dogs/{id}").permitAll()
-                        .requestMatchers("/api/dogs/adopt").permitAll()
-                        .requestMatchers("/api/dogs/buy").permitAll()
-                        .requestMatchers("/api/dogs/status/{status}").permitAll()
+                        .requestMatchers("/api/surrender-dogs/**").permitAll()
+                        .requestMatchers("/api/dogs/**").permitAll()
                         .requestMatchers("/api/reports").permitAll()
                         .requestMatchers("/api/contact-messages").permitAll()
+
+                        // Admin endpoints
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
 
                         // Authenticated endpoints
                         .requestMatchers("/api/applications/**").authenticated()
@@ -102,13 +104,10 @@ public class SecurityConfig {
                         .requestMatchers("/api/reports/my-reports").authenticated()
                         .requestMatchers("/api/surrender-dogs/my-requests").authenticated()
 
-                        // Admin-only endpoints
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
-
-                        // All other endpoints require authentication
+                        // Everything else requires authentication
                         .anyRequest().authenticated()
                 )
-                // Make sure JWT filter does not block OPTIONS requests
+                // Add JWT filter but skip OPTIONS requests inside JwtAuthFilter
                 .addFilterBefore(jwtAuthFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
