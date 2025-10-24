@@ -80,17 +80,18 @@ public class SecurityConfig {
 
                 // Authorization rules
                 .authorizeHttpRequests(auth -> auth
-                        // Allow all preflight OPTIONS requests BEFORE any authentication
+                        // Preflight requests must always be permitted
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
                         // Public endpoints
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers("/actuator/**").permitAll()
+                        .requestMatchers("/api/reports/**").permitAll()
                         .requestMatchers("/api/surrender-dogs/**").permitAll()
+                        .requestMatchers("/api/contact-messages/**").permitAll()
                         .requestMatchers("/api/dogs/**").permitAll()
-                        .requestMatchers("/api/reports").permitAll()
-                        .requestMatchers("/api/contact-messages").permitAll()
+                        .requestMatchers("/api/applications/**").permitAll()
 
                         // Admin endpoints
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
